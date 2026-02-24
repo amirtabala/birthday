@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --purple: #c77dff;
+    --yellow: #ffd166;
+    --mint: #06d6a0;
+    --blue: #4cc9f0;
+    --coral: #ff9a76;
+    --dark: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #fff0f8 0%, #ffe8f5 30%, #fef3e2 60%, #eee8ff 100%);
+    background-size: 300% 300%;
+    animation: bgShift 10s ease infinite;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: default;
+    user-select: none;
+  }
+
+  @keyframes bgShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+    5% { opacity: 0.75; }
+    95% { opacity: 0.75; }
+    100% { transform: translateY(-10vh) rotate(540deg); opacity: 0; }
+  }
+
+  .title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
+    color: var(--pink);
+    text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(255,107,157,0.25);
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    z-index: 1;
+    animation: bounceIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0) rotate(-8deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  /* ======= MAIN STAGE ======= */
+  .stage {
+    position: relative;
+    z-index: 1;
+    width: min(700px, 96vw);
+    height: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+  .stage::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(255,107,157,0.25), transparent);
+    border-radius: 50%;
+  }
+
+  /* ======= SPEECH BUBBLE ======= */
+  .speech-bubble {
+    position: absolute;
+    top: 14px;
+    left: 30px;
+    background: white;
+    border-radius: 18px;
+    padding: 10px 16px;
+    box-shadow: 0 4px 20px rgba(255,107,157,0.2);
+    white-space: nowrap;
+    animation: bubblePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both, floatBubble 2.5s ease-in-out 1.2s infinite;
+    z-index: 10;
+  }
+  @keyframes bubblePop {
+    0% { transform: scale(0) translateY(10px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  @keyframes floatBubble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px; left: 22px;
+    border: 7px solid transparent;
+    border-top-color: white;
+    border-bottom: 0;
+  }
+  .speech-bubble span {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: var(--pink);
+  }
+
+  /* ======= PENGUIN ======= */
+  .penguin-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    animation: penguinWalk 1.6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes penguinWalk {
+    0%, 100% { transform: rotate(-3deg) translateY(0); }
+    50% { transform: rotate(3deg) translateY(-6px); }
+  }
+
+  /* HAT above head */
+  .party-hat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -2px;
+    z-index: 10;
+    animation: hatTilt 1.6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes hatTilt {
+    0%, 100% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+  }
+  .hat-pom {
+    width: 16px; height: 16px;
+    background: radial-gradient(circle, #fff 40%, #ffd6e8 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(255,107,157,0.5);
+    margin-bottom: -2px;
+  }
+  .hat-cone {
+    width: 58px; height: 52px;
+    background: linear-gradient(160deg, #ff6b9d 0%, #c77dff 100%);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hat-stripe { position:absolute; bottom:13px; left:0; right:0; height:8px; background:rgba(255,255,255,0.3); }
+  .hat-stripe2 { position:absolute; bottom:25px; left:0; right:0; height:5px; background:rgba(255,255,255,0.18); }
+  .hat-brim {
+    width: 70px; height: 11px;
+    background: linear-gradient(135deg, #ff6b9d, #e05587);
+    border-radius: 5px;
+    box-shadow: 0 3px 8px rgba(255,107,157,0.4);
+  }
+
+  /* Head */
+  .penguin-head {
+    position: relative;
+    width: 88px; height: 88px;
+    background: var(--dark);
+    border-radius: 50%;
+    z-index: 5;
+    margin-bottom: -10px;
+  }
+
+  .face-patch {
+    position: absolute;
+    bottom: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 54px; height: 44px;
+    background: #fff8f8;
+    border-radius: 50%;
+  }
+
+  /* Big cute eyes */
+  .eye {
+    position: absolute;
+    top: 19px;
+    width: 28px; height: 32px;
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ffffff 55%, #f4f7ff 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 2px 10px rgba(0,0,0,0.25),
+      inset 0 -2px 6px rgba(0,0,0,0.06);
+  }
+  .eye.left { left: 11px; }
+  .eye.right { right: 11px; }
+
+  .pupil {
+    width: 18px; height: 22px;
+    background: radial-gradient(circle at 35% 30%, #3b3b3b 0%, #111 55%, #050505 100%);
+    border-radius: 50%;
+    position: relative;
+    animation: blink 3.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes blink {
+    0%, 40%, 60%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.06); }
+  }
+  /* Big sparkle shine */
+  .pupil::before {
+    content: '';
+    position: absolute;
+    top: 3px; right: 3px;
+    width: 8px; height: 8px;
+    background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.92) 60%, rgba(255,255,255,0.65) 100%);
+    border-radius: 50%;
+  }
+  /* Small extra shine */
+  .pupil::after {
+    content: '';
+    position: absolute;
+    bottom: 5px; left: 3px;
+    width: 4px; height: 4px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+  }
+
+  .blush {
+    position: absolute;
+    top: 50px;
+    width: 16px; height: 8px;
+    background: rgba(255,120,157,0.28);
+    border-radius: 50%;
+    filter: blur(1.6px);
+  }
+  .blush.left { left: 6px; }
+  .blush.right { right: 6px; }
+
+  .beak {
+    position: absolute;
+    bottom: 15px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 13px;
+    background: var(--yellow);
+    border-radius: 50% 50% 60% 60%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  /* Body */
+  .penguin-body {
+    position: relative;
+    width: 108px; height: 125px;
+    background: var(--dark);
+    border-radius: 54px 54px 48px 48px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .belly {
+    width: 68px; height: 90px;
+    background: #fff8f8;
+    border-radius: 34px 34px 38px 38px;
+    margin-top: 18px;
+  }
+
+  .wing {
+    position: absolute;
+    top: 18px;
+    width: 32px; height: 60px;
+    background: var(--dark);
+    border-radius: 40% 60% 65% 35%;
+    z-index: 3;
+  }
+  .wing.left { left:-18px; transform-origin: top right; animation: wingL 1.6s ease-in-out infinite; }
+  .wing.right { right:-18px; transform-origin: top left; animation: wingR 1.6s ease-in-out infinite; }
+  @keyframes wingL { 0%,100% { transform: rotate(-12deg); } 50% { transform: rotate(22deg); } }
+  @keyframes wingR { 0%,100% { transform: rotate(12deg); } 50% { transform: rotate(-22deg); } }
+
+  .feet {
+    display: flex;
+    gap: 12px;
+    margin-top: -2px;
+    z-index: 3;
+    position: relative;
+  }
+  .foot {
+    width: 30px; height: 14px;
+    background: var(--yellow);
+    border-radius: 50% 50% 40% 40%;
+    animation: footStep 1.6s ease-in-out infinite;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .foot:last-child { animation-delay: 0.8s; }
+  @keyframes footStep {
+    0%,100% { transform: rotate(-12deg) scaleX(1); }
+    50% { transform: rotate(12deg) scaleX(0.85); }
+  }
+
+  /* ======= GIFT ======= */
+  .gift-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding-bottom: 4px;
+  }
+
+  .click-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: var(--purple);
+    animation: labelPulse 1.3s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  @keyframes labelPulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+  }
+
+  .click-arrow {
+    font-size: 1.4rem;
+    animation: arrowBounce 0.9s ease-in-out infinite;
+    line-height: 1;
+  }
+  @keyframes arrowBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  .gift-wrap {
+    cursor: pointer;
+    animation: giftHover 2.2s ease-in-out infinite;
+    transition: filter 0.2s;
+    position: relative;
+  }
+  .gift-wrap:hover { filter: brightness(1.1) drop-shadow(0 0 18px rgba(255,107,157,0.6)); animation-play-state: paused; }
+  .gift-wrap:active { transform: scale(0.92) !important; }
+
+  @keyframes giftHover {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+
+  .gift-box {
+    width: 105px; height: 88px;
+    background: linear-gradient(145deg, #ff7eb3, #ff4d88);
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(255,77,136,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .gift-lid {
+    position: absolute;
+    top:-14px; left:-6px;
+    width:117px; height:26px;
+    background: linear-gradient(135deg, #ff9ac0, #ff6ba8);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .gift-ribbon-v {
+    position:absolute; inset:0;
+    width:22px; left:50%; transform:translateX(-50%);
+    background: linear-gradient(180deg, #ffd166, #ffc233);
+    z-index:1; border-radius:2px;
+  }
+  .gift-ribbon-h {
+    position:absolute; inset:0;
+    height:22px; top:50%; transform:translateY(-50%);
+    background: linear-gradient(90deg, #ffd166, #ffc233);
+    z-index:1; border-radius:2px;
+  }
+  .gift-bow {
+    position:absolute;
+    top:-36px; left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    display:flex; align-items:flex-end; gap:2px;
+  }
+  .bow-loop {
+    width:26px; height:20px;
+    background: radial-gradient(ellipse at 40% 40%, #ffe066, #ffb300);
+    border-radius:50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .bow-knot {
+    position:absolute; bottom:-2px; left:50%;
+    transform:translateX(-50%);
+    width:14px; height:14px;
+    background: radial-gradient(circle, #ffd166, #ffb300);
+    border-radius:50%; z-index:6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .gift-shine {
+    position:absolute; top:12px; right:10px;
+    width:14px; height:24px;
+    background:rgba(255,255,255,0.2);
+    border-radius:50%; transform:rotate(-25deg);
+    pointer-events:none; z-index:2;
+  }
+
+  /* ======= BALLOONS ======= */
+  .balloon-item {
+    position:fixed; bottom:-10px;
+    display:flex; flex-direction:column; align-items:center;
+    animation: balloonFloat ease-in-out infinite;
+    pointer-events:none; z-index:0;
+  }
+  .balloon-emoji { font-size:2.8rem; line-height:1; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+  .balloon-string-line { width:1px; background:rgba(0,0,0,0.15); }
+  @keyframes balloonFloat {
+    0%,100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-22px) rotate(4deg); }
+  }
+
+  /* ======= POPUP ======= */
+  .popup-overlay {
+    position:fixed; inset:0;
+    background:rgba(255,220,235,0.65);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:100; opacity:0; pointer-events:none;
+    transition:opacity 0.4s ease;
+  }
+  .popup-overlay.show { opacity:1; pointer-events:all; }
+
+  .popup-card {
+    background:white;
+    border-radius:36px;
+    box-shadow: 0 24px 80px rgba(255,107,157,0.35), 0 0 0 2px rgba(255,107,157,0.1);
+    transform:scale(0.6) rotate(-8deg);
+    transition:transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+    position:relative;
+    max-width:460px; width:92%;
+    overflow:hidden;
+  }
+  .popup-overlay.show .popup-card { transform:scale(1) rotate(0deg); }
+
+  .popup-top {
+    background:linear-gradient(135deg, #ff6b9d, #c77dff);
+    padding:28px 30px 22px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .popup-top::before {
+    content:'🎊'; position:absolute;
+    font-size:5rem; top:-10px; left:-10px;
+    opacity:0.12; transform:rotate(-20deg);
+  }
+  .popup-top::after {
+    content:'🎂'; position:absolute;
+    font-size:4rem; bottom:-8px; right:-5px;
+    opacity:0.15; transform:rotate(15deg);
+  }
+
+  /* Present burst animation */
+  .present-anim {
+    position:relative; display:inline-block; margin-bottom:8px;
+  }
+  .present-main {
+    font-size:5.5rem; display:block; line-height:1;
+    animation:presentPop 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,0.2));
+  }
+  @keyframes presentPop {
+    0% { transform:scale(0) rotate(-30deg); opacity:0; }
+    60% { transform:scale(1.18) rotate(6deg); }
+    100% { transform:scale(1) rotate(0deg); opacity:1; }
+  }
+
+  /* Orbiting sparkles */
+  .sparkle-ring {
+    position:absolute;
+    inset:-12px;
+    animation:sparkleOrbit 3s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes sparkleOrbit { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+  .sparkle-dot {
+    position:absolute;
+    font-size:1rem;
+    animation:sparkleRingPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes sparkleRingPulse {
+    0%,100%{opacity:0.4;transform:scale(0.7);}
+    50%{opacity:1;transform:scale(1.2);}
+  }
+
+  .popup-hb-title {
+    font-family:'Fredoka One',cursive;
+    font-size:2.6rem; color:white;
+    line-height:1.1;
+    text-shadow:2px 3px 0 rgba(0,0,0,0.12);
+    animation:titlePop 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
+    letter-spacing:1px;
+  }
+  @keyframes titlePop {
+    0%{transform:scale(0.4) translateY(12px);opacity:0;}
+    100%{transform:scale(1) translateY(0);opacity:1;}
+  }
+
+  /* Bottom section */
+  .popup-bottom {
+    padding:24px 28px 28px;
+    animation:fadeUp 0.5s ease 0.7s both;
+  }
+  @keyframes fadeUp {
+    0%{opacity:0;transform:translateY(14px);}
+    100%{opacity:1;transform:translateY(0);}
+  }
+
+  .note-label {
+    font-family:'Fredoka One',cursive;
+    font-size:0.85rem; color:var(--purple);
+    letter-spacing:2px; text-transform:uppercase;
+    margin-bottom:10px; display:block;
+  }
+
+  .popup-note {
+    font-size:1.05rem; color:#555; line-height:1.75;
+    font-weight:600; font-family:'Nunito',sans-serif;
+    min-height:110px; width:100%;
+    border:none;
+    background:#fff8fc;
+    border-radius:14px;
+    padding:14px 16px;
+    resize:vertical;
+    outline:none;
+    box-shadow:inset 0 2px 8px rgba(255,107,157,0.1);
+    border:2px solid rgba(199,125,255,0.2);
+    transition:border-color 0.2s;
+  }
+  .popup-note:focus { border-color:rgba(199,125,255,0.5); }
+
+  .popup-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+  }
+  .popup-choice {
+    flex: 1;
+    padding: 14px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.12rem;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  }
+  .popup-choice.one {
+    background: linear-gradient(135deg, #ff6b9d, #c77dff);
+    box-shadow: 0 6px 20px rgba(199,125,255,0.35);
+  }
+  .popup-choice.two {
+    background: linear-gradient(135deg, #06d6a0, #4cc9f0);
+    box-shadow: 0 6px 20px rgba(76,201,240,0.35);
+  }
+  .popup-choice:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.02);
+  }
+  .popup-choice:active { transform: scale(0.98); }
+
+  /* Confetti */
+  .confetti-piece {
+    position:fixed; pointer-events:none; z-index:200;
+    animation:confettiFall linear forwards; border-radius:2px;
+  }
+  @keyframes confettiFall {
+    0%{opacity:1;}
+    100%{opacity:0;transform:translateY(100vh) rotate(720deg) translateX(var(--drift));}
+  }
+</style>
+</head>
+<body>
+
+<div id="particles-container"></div>
+
+<div class="title">🎉 Happy 20th Kruthi Kutty 🎉</div>
+
+<!-- Main Stage -->
+<div class="stage">
+
+  <!-- Speech bubble above penguin -->
+  <div class="speech-bubble">
+    <span>Click to open the gift! 🐧💕</span>
+  </div>
+
+  <!-- PENGUIN on the left -->
+  <div class="penguin-wrap">
+    <!-- Party hat ABOVE the head -->
+    <div class="party-hat">
+      <div class="hat-pom"></div>
+      <div class="hat-cone">
+        <div class="hat-stripe"></div>
+        <div class="hat-stripe2"></div>
+      </div>
+      <div class="hat-brim"></div>
+    </div>
+
+    <div class="penguin-head">
+      <div class="face-patch"></div>
+      <div class="eye left"><div class="pupil"></div></div>
+      <div class="eye right"><div class="pupil"></div></div>
+      <div class="blush left"></div>
+      <div class="blush right"></div>
+      <div class="beak"></div>
+    </div>
+
+    <div class="penguin-body">
+      <div class="wing left"></div>
+      <div class="wing right"></div>
+      <div class="belly"></div>
+    </div>
+
+    <div class="feet">
+      <div class="foot"></div>
+      <div class="foot"></div>
+    </div>
+  </div>
+
+  <!-- GIFT on the right -->
+  <div class="gift-area">
+    <div class="click-label">✨ Click me! ✨</div>
+    <div class="click-arrow">👇</div>
+    <div class="gift-wrap" id="gift" onclick="openGift()">
+      <div class="gift-box">
+        <div class="gift-lid"></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-bow">
+          <div class="bow-loop"></div>
+          <div class="bow-loop"></div>
+          <div class="bow-knot"></div>
+        </div>
+        <div class="gift-shine"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup" onclick="handleOverlayClick(event)">
+  <div class="popup-card">
+
+    <div class="popup-top">
+      <div class="present-anim">
+        <span class="present-main">🎁</span>
+        <div class="sparkle-ring">
+          <span class="sparkle-dot" style="top:0;left:50%;transform:translateX(-50%);animation-delay:0s">✨</span>
+          <span class="sparkle-dot" style="top:50%;right:0;transform:translateY(-50%);animation-delay:0.35s">⭐</span>
+          <span class="sparkle-dot" style="bottom:0;left:50%;transform:translateX(-50%);animation-delay:0.7s">✨</span>
+          <span class="sparkle-dot" style="top:50%;left:0;transform:translateY(-50%);animation-delay:1.05s">⭐</span>
+        </div>
+      </div>
+      <div class="popup-hb-title">Happy Birthday! 🎂</div>
+    </div>
+
+    <div class="popup-bottom">
+      <span class="note-label">💌 A little note for you</span>
+      <textarea class="popup-note" rows="5" placeholder="Write your birthday message here... 🌸">I can't believe you've been a goofball for 2 decades. I love you and hope you have the best year ever! 🎈💕
+
+Happy Birthday! 🌸</textarea>
+      <div class="popup-actions">
+        <button class="popup-choice one" onclick="selectThanks('single')">Thank you! 👸👑 </button>
+        <button class="popup-choice two" onclick="selectThanks('double')">Thank you! 😏😻</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Floating particles — no rainbows!
+  const particles = ['🌟','✨','💫','🎈','🎊','🌸','🎀','💝','⭐','💕','🎂','🍰','🎁'];
+  const container = document.getElementById('particles-container');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = particles[Math.floor(Math.random() * particles.length)];
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.fontSize = (0.8 + Math.random() * 1.1) + 'rem';
+    p.style.animationDuration = (9 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 18) + 's';
+    document.body.appendChild(p);
+  }
+
+  // Balloons
+  const bPositions = [3, 13, 82, 93, 47];
+  const bDurations = [4.2, 4.8, 3.9, 5.1, 4.5];
+  bPositions.forEach((pos, i) => {
+    const b = document.createElement('div');
+    b.className = 'balloon-item';
+    b.style.left = pos + '%';
+    b.style.animationDuration = bDurations[i] + 's';
+    b.style.animationDelay = (i * 0.25) + 's';
+    b.innerHTML = `<div class="balloon-emoji">🎈</div>
+      <div class="balloon-string-line" style="height:${65 + i * 12}px"></div>`;
+    document.body.appendChild(b);
+  });
+
+  function openGift() {
+    document.getElementById('popup').classList.add('show');
+    launchConfetti();
+  }
+
+  function closeGift() {
+    document.getElementById('popup').classList.remove('show');
+  }
+
+  function selectThanks(kind) {
+    window.__thanksChoice = kind;
+    closeGift();
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('popup')) closeGift();
+  }
+
+  function launchConfetti() {
+    const colors = ['#ff6b9d','#c77dff','#ffd166','#06d6a0','#4cc9f0','#ff9a76','#ffb3d1','#e0c3fc'];
+    for (let i = 0; i < 90; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        const drift = ((Math.random() - 0.5) * 320) + 'px';
+        c.style.cssText = `
+          left:${15 + Math.random() * 70}vw;
+          top:30vh;
+          width:${6 + Math.random() * 10}px;
+          height:${6 + Math.random() * 10}px;
+          background:${colors[Math.floor(Math.random() * colors.length)]};
+          border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+          animation-duration:${1.6 + Math.random() * 2.5}s;
+          --drift:${drift};
+        `;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+      }, i * 25);
+    }
+  }
+</script>
+</body>
+</html>
